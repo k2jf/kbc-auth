@@ -36,7 +36,7 @@
     <delete id="deleteByOwnerIdAndRoleId">
         DELETE
         FROM t_owner_role
-        WHERE c_owner_id = #{arg0} AND c_role_id = #{arg1}
+        WHERE c_owner_id = #{ownerId} AND c_role_id = #{roleId}
     </delete>
 
     <update id="update" parameterType="com.k2data.kbc.auth.model.OwnerRole">

@@ -8,8 +8,8 @@
         c_usrgrp_id
         )
         VALUES (
-        #{arg0},
-        #{arg1}
+        #{userId},
+        #{usrgrpId}
         )
     </insert>
 
@@ -22,7 +22,7 @@
     <delete id="deleteByUserIdAndUsrgrpId">
         DELETE
         FROM t_user_usrgrp
-        WHERE c_user_id = #{arg0} AND c_usrgrp_id = #{arg1}
+        WHERE c_user_id = #{userId} AND c_usrgrp_id = #{usrgrpId}
     </delete>
 
     <select id="getUsrgrpIdsByUserId" resultType="java.lang.Integer">
