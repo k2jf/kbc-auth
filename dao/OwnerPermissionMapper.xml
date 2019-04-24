@@ -43,6 +43,12 @@
         AND c_resource_id = #{resourceId}
     </delete>
 
+    <delete id="deleteByOwnerId">
+        DELETE
+        FROM t_owner_permission
+        WHERE c_owner_id = #{arg0}
+    </delete>
+
     <update id="update" parameterType="com.k2data.kbc.auth.model.OwnerPermission">
         UPDATE t_owner_permission
         <set>
