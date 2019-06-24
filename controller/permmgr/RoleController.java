@@ -5,6 +5,7 @@ import com.k2data.kbc.api.KbcResponse;
 import com.k2data.kbc.auth.service.PermmgrSevice;
 import com.k2data.kbc.auth.service.request.CreateRoleRequest;
 import com.k2data.kbc.auth.service.request.ModifyPermissionRequest;
+import com.k2data.kbc.auth.service.request.ModifyRoleRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,15 @@ public class RoleController {
         return KbcResponse.SUCCESS;
     }
 
+    @ApiOperation("更新角色")
+    @PutMapping("/{roleId}")
+    public KbcResponse modifyRole(@PathVariable Integer roleId,
+        @RequestBody ModifyRoleRequest modifyRoleRequest) {
+
+        permmgrSevice.modifyRole(roleId, modifyRoleRequest);
+        return KbcResponse.SUCCESS;
+    }
+
     @ApiOperation("更新角色下的拥有者")
     @PutMapping("/{roleId}/rowners")
     public KbcResponse modifyOwnersForRole(@PathVariable Integer roleId,
@@ -87,11 +97,20 @@ public class RoleController {
     @ApiOperation("查询角色下权限信息")
     @GetMapping("/{roleId}/permissions")
     public KbcResponse listRolePermissions(@PathVariable Integer roleId,
-        @RequestParam Integer resourceTypeId,
+        @RequestParam(required = false) Integer resourceTypeId,
         @RequestParam(required = false) String fuzzyResName) {
         KbcResponse response = new KbcResponse();
         response.getBody()
             .put("roles", permmgrSevice.listRolePermissions(roleId, resourceTypeId, fuzzyResName));
+        return response;
+    }
+
+    @ApiOperation("查询角色下拥有者信息")
+    @GetMapping("/{roleId}/rowners")
+    public KbcResponse listRoleOwners(@PathVariable Integer roleId) {
+        KbcResponse response = new KbcResponse();
+        response.getBody()
+            .put("roles", permmgrSevice.listRoleOwners(roleId));
         return response;
     }
 }

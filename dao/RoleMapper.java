@@ -12,5 +12,7 @@ public interface RoleMapper {
 
     void delete(Integer id);
 
+    void update(Role role);
+
     List<Role> list(RoleCondition condition);
 }

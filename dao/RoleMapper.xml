@@ -25,6 +25,19 @@
         WHERE c_id = #{arg0}
     </delete>
 
+    <update id="update" parameterType="com.k2data.kbc.auth.model.Role">
+        UPDATE t_role
+        <set>
+            <if test="name != null">
+                c_name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                c_description = #{description,jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE c_id = #{id,jdbcType=BIGINT}
+    </update>
+
     <select id="list"
         parameterType="com.k2data.kbc.auth.dao.condition.RoleCondition"
         resultMap="BaseResultMap">

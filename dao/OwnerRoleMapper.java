@@ -20,4 +20,7 @@ public interface OwnerRoleMapper {
     List<Integer> getRoleIdsByOwnerId(Integer ownerId);
 
     List<OwnerRole> getByOwnerId(Integer ownerId);
+
+    List<OwnerRole> getByRoleId(Integer roleId);
+
 }

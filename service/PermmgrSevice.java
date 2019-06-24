@@ -15,6 +15,7 @@ import com.k2data.kbc.auth.service.request.ConfigOwnerPermissionsRequest;
 import com.k2data.kbc.auth.service.request.ConfigOwnerRolesRequest;
 import com.k2data.kbc.auth.service.request.CreateRoleRequest;
 import com.k2data.kbc.auth.service.request.ModifyPermissionRequest;
+import com.k2data.kbc.auth.service.request.ModifyRoleRequest;
 import com.k2data.kbc.auth.service.response.OwnerRoleResponse;
 import com.k2data.kbc.auth.service.response.PermissionResponse;
 import com.k2data.kbc.auth.service.response.RolePermissionResponse;
@@ -100,6 +101,14 @@ public class PermmgrSevice {
         for (String resourceIdStr : resourceIdsStr.split(",")) {
             rolePermissionMapper.delete(roleId, Integer.valueOf(resourceIdStr));
         }
+    }
+
+    public void modifyRole(Integer roleId, ModifyRoleRequest modifyRoleRequest) {
+        Role role = new Role();
+        role.setId(roleId);
+        role.setName(modifyRoleRequest.getName());
+        role.setDescription(modifyRoleRequest.getDescription());
+        roleMapper.update(role);
     }
 
     @Transactional
@@ -394,6 +403,10 @@ public class PermmgrSevice {
             result.add(new RolePermissionResponse(rolePermission, resource));
         }
         return result;
+    }
+
+    public List<OwnerRole> listRoleOwners(Integer roleId) {
+        return ownerRoleMapper.getByRoleId(roleId);
     }
 
     public List<OwnerRoleResponse> listOwnerRoles(String fuzzyName, Integer ownerId) {
