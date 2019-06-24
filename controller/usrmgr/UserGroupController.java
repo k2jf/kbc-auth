@@ -5,6 +5,7 @@ import com.k2data.kbc.api.KbcResponse;
 import com.k2data.kbc.auth.model.UserGroup;
 import com.k2data.kbc.auth.service.UsrmgrService;
 import com.k2data.kbc.auth.service.request.CreateUserGroupRequest;
+import com.k2data.kbc.auth.service.request.ModifyUserGroupRequest;
 import com.k2data.kbc.auth.service.request.ModifyUsersForUsrgrpRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -47,6 +48,14 @@ public class UserGroupController {
     public KbcResponse deleteUserFromUsrgrp(@PathVariable Integer id,
         @PathVariable Integer userId) {
         usrmgrService.deleteUserFromUsrgrp(id, userId);
+        return KbcResponse.SUCCESS;
+    }
+
+    @ApiOperation("更新用户组")
+    @PutMapping("/{id}")
+    public KbcResponse modifyUserGroup(@PathVariable Integer id,
+        @RequestBody ModifyUserGroupRequest modifyUserGroupRequest) {
+        usrmgrService.modifyUserGroup(id, modifyUserGroupRequest);
         return KbcResponse.SUCCESS;
     }
 

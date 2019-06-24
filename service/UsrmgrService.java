@@ -10,6 +10,7 @@ import com.k2data.kbc.auth.model.User;
 import com.k2data.kbc.auth.model.UserGroup;
 import com.k2data.kbc.auth.service.request.CreateUserGroupRequest;
 import com.k2data.kbc.auth.service.request.CreateUserRequest;
+import com.k2data.kbc.auth.service.request.ModifyUserGroupRequest;
 import com.k2data.kbc.auth.service.request.ModifyUserRequest;
 import com.k2data.kbc.auth.service.request.ModifyUsersForUsrgrpRequest;
 import com.k2data.kbc.auth.service.request.RebindUserGroupsRequest;
@@ -44,6 +45,10 @@ public class UsrmgrService {
     public void createUser(CreateUserRequest createUserRequest) throws KbcBizException {
         // 校验
         String name = createUserRequest.getName();
+        if (null == name) {
+            throw new KbcBizException("用户名称不能为空！");
+        }
+        name = name.replace(" ", "");
         if (StringUtils.isEmpty(name)) {
             throw new KbcBizException("用户名称不能为空！");
         }
@@ -112,11 +117,25 @@ public class UsrmgrService {
         userUsrgrpMapper.deleteByUserIdAndUsrgrpId(userId, usrgrpId);
     }
 
-    public void modifyUser(Integer userId, ModifyUserRequest modifyUserRequest) {
+    public void modifyUser(Integer userId, ModifyUserRequest modifyUserRequest) throws KbcBizException {
+        String name = modifyUserRequest.getName();
+        if (null == name) {
+            throw new KbcBizException("用户名称不能为空！");
+        }
+        name = name.replace(" ", "");
+        if (StringUtils.isEmpty(name)) {
+            throw new KbcBizException("用户名称不能为空！");
+        }
+
+        String email = modifyUserRequest.getEmail();
+        if (!isEmail(email)) {
+            throw new KbcBizException("邮箱不合法！");
+        }
+
         User user = new User();
         user.setId(userId);
-        user.setName(modifyUserRequest.getName());
-        user.setEmail(modifyUserRequest.getEmail());
+        user.setName(name);
+        user.setEmail(email);
         userMapper.update(user);
     }
 
@@ -222,6 +241,7 @@ public class UsrmgrService {
         }
         UserGroup userGroup = new UserGroup();
         userGroup.setName(createUserGroupRequest.getName());
+        userGroup.setDescription(createUserGroupRequest.getDescription());
         userGroupMapper.insert(userGroup);
     }
 
@@ -235,6 +255,14 @@ public class UsrmgrService {
 
     public void deleteUserFromUsrgrp(Integer usrgrpId, Integer userId) {
         userUsrgrpMapper.deleteByUserIdAndUsrgrpId(userId, usrgrpId);
+    }
+
+    public void modifyUserGroup(Integer id, ModifyUserGroupRequest modifyUserGroupRequest) {
+        UserGroup userGroup = new UserGroup();
+        userGroup.setId(id);
+        userGroup.setName(modifyUserGroupRequest.getName());
+        userGroup.setDescription(modifyUserGroupRequest.getDescription());
+        userGroupMapper.update(userGroup);
     }
 
     @Transactional

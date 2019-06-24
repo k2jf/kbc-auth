@@ -5,14 +5,17 @@
     <resultMap id="BaseResultMap" type="com.k2data.kbc.auth.model.UserGroup">
         <id column="c_id" jdbcType="INTEGER" property="id"/>
         <result column="c_name" jdbcType="VARCHAR" property="name"/>
+        <result column="c_description" jdbcType="VARCHAR" property="description"/>
     </resultMap>
 
     <insert id="insert" keyProperty="id">
         INSERT INTO t_user_group (
-        c_name
+        c_name,
+        c_description
         )
         VALUES (
-        #{name}
+        #{name},
+        #{description}
         )
     </insert>
 
@@ -21,6 +24,19 @@
         FROM t_user_group
         WHERE c_id = #{arg0}
     </delete>
+
+    <update id="update" parameterType="com.k2data.kbc.auth.model.UserGroup">
+        UPDATE t_user_group
+        <set>
+            <if test="name != null">
+                c_name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                c_description = #{description,jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE c_id = #{id,jdbcType=BIGINT}
+    </update>
 
     <select id="getById" resultMap="BaseResultMap">
         SELECT *

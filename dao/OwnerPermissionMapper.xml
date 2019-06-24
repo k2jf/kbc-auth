@@ -39,8 +39,8 @@
     <delete id="delete">
         DELETE
         FROM t_owner_permission
-        WHERE c_owner_id = #{ownerId}
-        AND c_resource_id = #{resourceId}
+        WHERE c_owner_id = #{arg0}
+        AND c_resource_id = #{arg1}
     </delete>
 
     <delete id="deleteByOwnerId">

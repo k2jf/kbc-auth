@@ -12,6 +12,8 @@ public interface UserGroupMapper {
 
     void delete(Integer id);
 
+    void update(UserGroup userGroup);
+
     UserGroup getById(Integer id);
 
     List<UserGroup> list(UserGroupCondition condition);

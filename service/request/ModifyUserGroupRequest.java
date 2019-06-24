@@ -1,20 +1,10 @@
-package com.k2data.kbc.auth.model;
+package com.k2data.kbc.auth.service.request;
 
-public class UserGroup {
-
-    private Integer id;
+public class ModifyUserGroupRequest {
 
     private String name;
 
     private String description;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -32,4 +22,3 @@ public class UserGroup {
         this.description = description;
     }
 }
-

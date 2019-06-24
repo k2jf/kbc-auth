@@ -100,6 +100,7 @@ DROP TABLE IF EXISTS `t_user_group`;
 CREATE TABLE `t_user_group` (
   `c_id` tinyint(4) NOT NULL AUTO_INCREMENT,
   `c_name` varchar(200) NOT NULL,
+  `c_description` varchar(500),
   PRIMARY KEY (`c_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
