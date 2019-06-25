@@ -52,7 +52,7 @@ public class UserController {
     @ApiOperation("修改用户信息")
     @PutMapping("/{userId}")
     public KbcResponse modifyUser(@PathVariable Integer userId,
-        @RequestBody ModifyUserRequest modifyUserRequest) {
+        @RequestBody ModifyUserRequest modifyUserRequest) throws KbcBizException {
         usrmgrService.modifyUser(userId, modifyUserRequest);
         return KbcResponse.SUCCESS;
     }
