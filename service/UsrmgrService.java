@@ -146,6 +146,18 @@ public class UsrmgrService {
         userMapper.update(user);
     }
 
+    @Transactional
+    public void resetPwd(Integer userId) throws KbcBizException {
+        User user = userMapper.getById(userId);
+        if (null == user) {
+            throw new KbcBizException("不存在此用户");
+        }
+
+        // 重置密码为当前用户名
+        user.setPassword(user.getName());
+        userMapper.update(user);
+    }
+
     public void rebindUserGroups(Integer userId, RebindUserGroupsRequest rebindUserGroupsRequest) {
         String usrgrpIdsStr = rebindUserGroupsRequest.getUsrgrpIds();
         String[] usrgrpIds = null == usrgrpIdsStr ? new String[0] : usrgrpIdsStr.split(",");

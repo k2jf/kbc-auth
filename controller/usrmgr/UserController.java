@@ -64,6 +64,13 @@ public class UserController {
         return KbcResponse.SUCCESS;
     }
 
+    @ApiOperation("重置密码")
+    @PutMapping(value = "/{id}", params = "action=resetPwd")
+    public KbcResponse resetPwd(@PathVariable Integer userId) throws KbcBizException {
+        usrmgrService.resetPwd(userId);
+        return KbcResponse.SUCCESS;
+    }
+
     @ApiOperation("修改用户所属的用户组")
     @PutMapping("/{userId}/usrgrps")
     public KbcResponse rebindUserGroups(@PathVariable Integer userId,
